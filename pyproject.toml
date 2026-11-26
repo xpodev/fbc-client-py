@@ -6,6 +6,16 @@ readme = "README.md"
 requires-python = ">=3.9"
 dependencies = []
 license = { text = "Proprietary" }
+keywords = ["feedback", "error-reporting", "crash-reporting", "analytics", "support"]
+classifiers = [
+    "Programming Language :: Python :: 3",
+    "Operating System :: OS Independent",
+    "Typing :: Typed",
+]
+
+[project.urls]
+Homepage = "https://github.com/xpodev/fbc-client-py"
+Issues = "https://github.com/xpodev/fbc-client-py/issues"
 
 [dependency-groups]
 dev = ["pytest>=8"]
