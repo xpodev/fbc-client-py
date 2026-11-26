@@ -181,3 +181,21 @@ def test_logging_handlers(server, client):
 
 def test_key_info(server, client):
     assert client.key_info()["application"] == "demo"
+
+
+def test_hebrew_payloads(server, client):
+    client.set_user(name="יעל כהן")
+    client.send_feedback("הייצוא איטי מאוד", category="באג", metadata={"מסך": "ייצוא"})
+    try:
+        raise ValueError("ערך לא חוקי בשדה 'כמות'")
+    except ValueError:
+        client.capture_exception()
+    client.track("דוח_יוצא", {"פורמט": "אקסל"})
+    client.flush()
+    fb = server.posts("/v1/feedback")[0]
+    assert fb["message"] == "הייצוא איטי מאוד" and fb["user"]["name"] == "יעל כהן"
+    assert fb["metadata"] == {"מסך": "ייצוא"}
+    err = server.posts("/v1/errors")[0]
+    assert err["message"] == "ערך לא חוקי בשדה 'כמות'"
+    assert "ערך לא חוקי" in err["stacktrace"]
+    assert server.posts("/v1/events")[0]["events"][0]["name"] == "דוח_יוצא"
