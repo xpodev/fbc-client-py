@@ -52,6 +52,10 @@ dependencies = ["xpo-feedback @ git+https://github.com/xpodev/fbc-client-py@v0.1
 
 The distribution is called `xpo-feedback`; the import name is `xpo_feedback`.
 
+Always pin a release tag (see [CHANGELOG.md](CHANGELOG.md) for the latest), so an
+install gives the same code every time. To try unreleased changes, install `@main`
+instead, but don't ship software that depends on `main`.
+
 ## Quick start
 
 ```python
